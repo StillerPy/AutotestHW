@@ -13,8 +13,13 @@ fun calculateCommission(card: String, previousSum: Int, transaction: Int): Int {
     when (card) {
         "Мир" -> return 0
         "Visa" -> return (transaction * 0.0075).toInt().coerceAtLeast(35)
-        "Mastercard" -> return 0
-
+        "Mastercard" -> {
+            if (previousSum + transaction <= 75_000) {
+                return 0
+            } else {
+                return ((transaction - 75_000) * 0.006 + 20).toInt()
+            }
+        }
         else -> return ERR_UNKNOWN_CARD
     }
 }
